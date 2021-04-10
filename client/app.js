@@ -45,7 +45,7 @@ const addMessage = (author, content) => {
     message.innerHTML = `
       <h3 class="message__author">${userName === author ? 'You' : author }</h3>
       <div class="message__content">
-      userName
+      ${content}
       </div>
     `;
     messagesList.appendChild(message);
