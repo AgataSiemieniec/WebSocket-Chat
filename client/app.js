@@ -10,6 +10,8 @@ const socket = io();
 
 let userName = '';
 
+socket.on('message', ({ author, content }) => addMessage(author, content));
+
 const login = event => {
     event.preventDefault();
     if(!userNameInput.value){
@@ -21,12 +23,16 @@ const login = event => {
     }
 };
 
-const sendMessage = event => {
-    event.preventDefault();
-    if(!messageContentInput.value){
+const sendMessage = e => {
+    e.preventDefault();
+
+    let messageContent = messageContentInput.value;
+
+    if(!messageContent ){
         alert('Wright a message, please!');
     } else {
-        addMessage(userName, messageContentInput.value);
+        addMessage(userName, messageContent);
+        socket.emit('message', { author: userName, content: messageContent });
         messageContentInput.value = '';
     } 
 };
@@ -39,7 +45,7 @@ const addMessage = (author, content) => {
     message.innerHTML = `
       <h3 class="message__author">${userName === author ? 'You' : author }</h3>
       <div class="message__content">
-        ${content}
+      userName
       </div>
     `;
     messagesList.appendChild(message);
