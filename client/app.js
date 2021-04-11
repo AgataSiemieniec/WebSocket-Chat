@@ -6,18 +6,22 @@ const addMessageForm = document.getElementById('add-messages-form');
 const userNameInput = document.getElementById('username');
 const messageContentInput = document.getElementById('message-content');
 
-const socket = io();
-
 let userName = '';
 
+const socket = io();
+
 socket.on('message', ({ author, content }) => addMessage(author, content));
+socket.on('user', ({ author, content }) => addMessage(author, content));
 
 const login = event => {
     event.preventDefault();
+
     if(!userNameInput.value){
         alert('Sign in, please!');
     } else {
         userName = userNameInput.value;
+        console.log(userName);
+        socket.emit('user', userName);
         loginForm.classList.remove('show');
         messagesSection.classList.add('show');
     }
