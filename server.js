@@ -20,6 +20,17 @@ const io = socket(server);
 
 io.on('connection', (socket) => {
     console.log('New client! Its id – ' + socket.id);
-    socket.on('message', () => { console.log('Oh, I\'ve got something from ' + socket.id) });
-    console.log('I\'ve added a listener on message event \n');
+
+    socket.on('message', (message) => {
+        console.log('Oh, I\'ve got something from ' + socket.id);
+        messages.push(message);
+        socket.broadcast.emit('message', message);
+    });
+
+    socket.on('disconnect', () => { 
+        console.log('Oh, socket ' + socket.id + ' has left') 
+    });
+
+    console.log('I\'ve added a listener on message and disconnect events \n');
   });
+   

@@ -17,7 +17,7 @@ const login = event => {
     if(!userNameInput.value){
         alert('Sign in, please!');
     } else {
-        userNameInput.value = userName;
+        userName = userNameInput.value;
         loginForm.classList.remove('show');
         messagesSection.classList.add('show');
     }
@@ -45,7 +45,7 @@ const addMessage = (author, content) => {
     message.innerHTML = `
       <h3 class="message__author">${userName === author ? 'You' : author }</h3>
       <div class="message__content">
-      ${content}
+        ${content}
       </div>
     `;
     messagesList.appendChild(message);
