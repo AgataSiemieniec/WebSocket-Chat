@@ -33,6 +33,7 @@ io.on('connection', (socket) => {
     socket.on('user', (userName) => {
       users.push({name: userName, id: socket.id });
       console.log('User ' + socket.id + ' just logged in as' + userName);
+      socket.broadcast.emit('user', { author: 'Chat Bot', content: userName + ' has joined the conversation!' });
     });
 
     socket.on('disconnect', () => { 
@@ -40,10 +41,10 @@ io.on('connection', (socket) => {
         const removedUser = users.find(users => users.id === socket.id);
         const userToRemove = users.indexOf(removedUser);
         if(removedUser){
+          socket.broadcast.emit('removedUser', { author: 'Chat Bot', content: removedUser.name + 'has left the conversation... :(' });
           users.splice(userToRemove, 1);
         }
     });
 
     console.log('I\'ve added a listener on message and disconnect events \n');
   });
-   
