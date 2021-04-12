@@ -33,12 +33,15 @@ io.on('connection', (socket) => {
     socket.on('user', (userName) => {
       users.push({name: userName, id: socket.id });
       console.log('User ' + socket.id + ' just logged in as' + userName);
-      // console.log('jeden uzytkownik to', user.author);
     });
 
     socket.on('disconnect', () => { 
         console.log('Oh, socket ' + socket.id + ' has left');
-        // users.splice(user, 1);
+        const removedUser = users.find(users => users.id === socket.id);
+        const userToRemove = users.indexOf(removedUser);
+        if(removedUser){
+          users.splice(userToRemove, 1);
+        }
     });
 
     console.log('I\'ve added a listener on message and disconnect events \n');

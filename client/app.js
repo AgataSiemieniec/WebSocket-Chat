@@ -12,6 +12,7 @@ const socket = io();
 
 socket.on('message', ({ author, content }) => addMessage(author, content));
 socket.on('user', ({ author, content }) => addMessage(author, content));
+socket.on('removedUser', ({ author, content }) => addMessage(author, content))
 
 const login = event => {
     event.preventDefault();
